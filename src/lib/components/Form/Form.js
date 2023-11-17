@@ -63,6 +63,10 @@ const Form = ({
         validateOnBlur: false,
         onSubmit: (values, { resetForm }) => {
             setIsLoading(true);
+            const columns = model.columns.filter(item => item.isNotPayload).map(item => item.field);
+            values = Object.fromEntries(
+                Object.entries(values).filter(([key]) => !columns.includes(key))
+            );
             saveRecord({
                 id,
                 api: api || model?.api,
@@ -116,8 +120,13 @@ const Form = ({
             breadcrumbs.push({ text: localValue });
         }
     }
-    const handleFormCancel = function () {
-        navigate('./');
+    const handleFormCancel = function (e) {
+        e.preventDefault();
+        if(model.path) {
+            navigate(`./${model.path}`);
+        } else {
+            navigate('./');
+        }
     }
     const handleDelete = async function () {
         setIsDeleting(true);
@@ -197,7 +206,15 @@ const Form = ({
     return !!model.addHeaderFilters ? (
         <ActiveStepContext.Provider value={{ activeStep, setActiveStep }}>
             <Paper sx={{ padding: 2 }}>
-                {content}
+                <form>
+                    <Stack direction="row" spacing={2} justifyContent="flex-end" mb={1}>
+                        {permissions.edit && <Button variant="contained" type="submit" color="success" onClick={formik.handleSubmit}>Save</Button>}
+                        <Button variant="contained" type="cancel" color="error" onClick={(e) => handleFormCancel(e)}>Cancel</Button>
+                        {permissions.delete && <Button variant="contained" color="error" onClick={() => setIsDeleting(true)}>Delete</Button>}
+                    </Stack>
+                    <Layout model={model} formik={formik} data={data} fieldConfigs={fieldConfigs} combos={combos} onChange={handleChange} lookups={lookups} id={id} />
+                </form>
+                <DialogComponent open={isDeleting} onConfirm={handleDelete} onCancel={() => setIsDeleting(false)} title="Confirm Delete">{`Are you sure you want to delete ${data?.GroupName}?`}</DialogComponent>
             </Paper>
         </ActiveStepContext.Provider >
     ) : content;

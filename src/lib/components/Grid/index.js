@@ -40,7 +40,7 @@ const actionTypes = {
 };
 const constants = {
     gridFilterModel: { items: [], logicOperator: 'and', quickFilterValues: Array(0), quickFilterLogicOperator: 'and' },
-    permissions: { edit: true, add: true, export: true, delete: true, clearFilterText: "CLEAR THIS FILTER" },
+    permissions: { edit: true, add: true, export: false, delete: true, clearFilterText: "CLEAR THIS FILTER" },
 }
 
 const gridColumnTypes = {
@@ -504,12 +504,8 @@ const GridBase = memo(({
     };
 
     useEffect(() => {
-        if (isLoading !== prevIsLoading.current) {
-            prevIsLoading.current = isLoading;
-            return;
-        }
-        fetchData();
-    }, [paginationModel, isLoading, sortModel, advanceFilter, fetchData]);
+        fetchData()
+    }, [paginationModel, sortModel, filterModel, api, gridColumns, model, parentFilters, assigned, selected, available, advanceFilter]);
 
     // useEffect(
     //     fetchData,

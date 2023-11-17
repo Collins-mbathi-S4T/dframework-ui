@@ -7,6 +7,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.Footer = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 require("core-js/modules/es.parse-int.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.regexp.test.js");
 var _xDataGridPremium = require("@mui/x-data-grid-premium");
 var _Box = _interopRequireDefault(require("@mui/material/Box"));
 var _Typography = _interopRequireDefault(require("@mui/material/Typography"));
@@ -22,13 +24,34 @@ const Footer = _ref => {
     apiRef
   } = _ref;
   const page = apiRef.current.state.pagination.paginationModel.page;
+  const rowsPerPage = apiRef.current.state.pagination.paginationModel.pageSize;
   const [pageNumber, setPageNumber] = (0, _react.useState)(page + 1);
   const handleChange = function handleChange(e) {
     var _e$target;
-    setPageNumber(parseInt((_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.value));
+    let value = (_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.value;
+    if (value === '') {
+      setPageNumber('');
+    } else {
+      value = parseInt(value);
+      value = isNaN(value) || value < 1 ? 1 : value;
+      setPageNumber(value);
+    }
   };
+  (0, _react.useEffect)(() => {
+    setPageNumber(page + 1);
+  }, [page, rowsPerPage]);
   const onPageChange = function onPageChange() {
-    apiRef.current.setPage(pageNumber - 1);
+    let targetPage = pageNumber === '' ? 1 : pageNumber;
+    targetPage = Math.max(targetPage, 1);
+    apiRef.current.setPage(targetPage - 1);
+    if (pageNumber === '') {
+      setPageNumber(1);
+    }
+  };
+  const handleKeyPress = event => {
+    const keyCode = event.which || event.keyCode;
+    const keyValue = String.fromCharCode(keyCode);
+    if (!/\d/.test(keyValue)) event.preventDefault();
   };
   return /*#__PURE__*/_react.default.createElement(_xDataGridPremium.GridFooterContainer, null, /*#__PURE__*/_react.default.createElement(_Box.default, {
     sx: {
@@ -36,7 +59,7 @@ const Footer = _ref => {
     }
   }, pagination && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Typography.default, {
     variant: "p"
-  }, "Jump to page"), /*#__PURE__*/_react.default.createElement(_TextField.default, {
+  }, "Jump to page:"), /*#__PURE__*/_react.default.createElement(_TextField.default, {
     sx: {
       width: 70,
       pl: 1
@@ -45,7 +68,8 @@ const Footer = _ref => {
     type: "number",
     min: 1,
     value: pageNumber,
-    onChange: handleChange
+    onChange: handleChange,
+    onKeyPress: handleKeyPress
   }), /*#__PURE__*/_react.default.createElement(_Button.default, {
     size: "small",
     onClick: onPageChange

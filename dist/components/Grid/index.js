@@ -68,7 +68,7 @@ const constants = {
   permissions: {
     edit: true,
     add: true,
-    export: true,
+    export: false,
     delete: true,
     clearFilterText: "CLEAR THIS FILTER"
   }
@@ -654,12 +654,8 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
     fetchData(undefined, undefined, e.target.dataset.contentType, columns);
   };
   (0, _react.useEffect)(() => {
-    if (isLoading !== prevIsLoading.current) {
-      prevIsLoading.current = isLoading;
-      return;
-    }
     fetchData();
-  }, [paginationModel, isLoading, sortModel, advanceFilter, fetchData]);
+  }, [paginationModel, sortModel, filterModel, api, gridColumns, model, parentFilters, assigned, selected, available, advanceFilter]);
 
   // useEffect(
   //     fetchData,
