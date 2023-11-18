@@ -236,9 +236,8 @@ const Form = _ref => {
     variant: "contained",
     type: "cancel",
     color: "error",
-    onClick: e => handleFormCancel(e)
+    onClick: handleFormCancel
   }, "Cancel"), permissions.delete && model.addHeaderFilters !== false && /*#__PURE__*/_react.default.createElement(_Button.default, {
-
     variant: "contained",
     color: "error",
     onClick: () => setIsDeleting(true)
@@ -302,6 +301,39 @@ const Form = _ref => {
     sx: {
       padding: 2
     }
-  }, content)) : content;
+  }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement(_Stack.default, {
+    direction: "row",
+    spacing: 2,
+    justifyContent: "flex-end",
+    mb: 1
+  }, permissions.edit && /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "contained",
+    type: "submit",
+    color: "success",
+    onClick: formik.handleSubmit
+  }, "Save"), /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "contained",
+    type: "cancel",
+    color: "error",
+    onClick: e => handleFormCancel(e)
+  }, "Cancel"), permissions.delete && /*#__PURE__*/_react.default.createElement(_Button.default, {
+    variant: "contained",
+    color: "error",
+    onClick: () => setIsDeleting(true)
+  }, "Delete")), /*#__PURE__*/_react.default.createElement(Layout, {
+    model: model,
+    formik: formik,
+    data: data,
+    fieldConfigs: fieldConfigs,
+    combos: combos,
+    onChange: handleChange,
+    lookups: lookups,
+    id: id
+  })), /*#__PURE__*/_react.default.createElement(_Dialog.DialogComponent, {
+    open: isDeleting,
+    onConfirm: handleDelete,
+    onCancel: () => setIsDeleting(false),
+    title: "Confirm Delete"
+  }, "Are you sure you want to delete ".concat(data === null || data === void 0 ? void 0 : data.GroupName, "?")))) : content;
 };
 var _default = exports.default = Form;

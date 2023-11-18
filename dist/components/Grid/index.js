@@ -347,13 +347,9 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
     const showActions = (model === null || model === void 0 ? void 0 : model.addHeaderFilters) !== false;
     if (showActions && !forAssignment && !isReadOnly) {
       const actions = [];
-      if (model.addEdit && permissions.edit) {
-        actions.push( /*#__PURE__*/_react.default.createElement(_xDataGridPremium.GridActionsCellItem, {
-          icon: /*#__PURE__*/_react.default.createElement(_Edit.default, null),
-          "data-action": actionTypes.Edit,
-          label: "Edit"
-        }));
-      }
+      // if (model.addEdit && permissions.edit) {
+      //     actions.push(<GridActionsCellItem icon={<EditIcon />} data-action={actionTypes.Edit} label="Edit" />);
+      // }
       if (model.addCopy && permissions.add) {
         actions.push( /*#__PURE__*/_react.default.createElement(_xDataGridPremium.GridActionsCellItem, {
           icon: /*#__PURE__*/_react.default.createElement(_FileCopy.default, null),
@@ -379,7 +375,7 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
       }
       pinnedColumns.right.push('actions');
     } else {
-      if (!model.noOptionButton) {
+      if (!model.noOptionButton && (model.canDelete === undefined || model.canDelete || model.canEdit === undefined || model.canEdit)) {
         finalColumns.push({
           field: 'actions',
           width: 1,
@@ -863,10 +859,10 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
       horizontal: 'right',
       vertical: 'center'
     }
-  }, /*#__PURE__*/_react.default.createElement(ActionMenuItem, {
+  }, (model.canEdit === undefined || model.canEdit) && /*#__PURE__*/_react.default.createElement(ActionMenuItem, {
     actionType: actionTypes.Edit,
     handler: () => handleMenuEdit(selectedRecord)
-  }, "Edit"), /*#__PURE__*/_react.default.createElement(ActionMenuItem, {
+  }, "Edit"), (model.canDelete === undefined || model.canDelete) && /*#__PURE__*/_react.default.createElement(ActionMenuItem, {
     actionType: actionTypes.Delete,
     handler: () => handleMenuDelete(selectedRecord)
   }, "Delete")));
