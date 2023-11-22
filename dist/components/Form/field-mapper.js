@@ -234,7 +234,7 @@ const RenderColumns = _ref3 => {
     } = element;
     let isGridComponent = typeof column.relation === 'function';
     const gridStyle = !model.addHeaderFilters ? 12 : 10.5;
-    return /*#__PURE__*/React.createElement(_Grid.default, {
+    return (column.editable === undefined || column.editable) && /*#__PURE__*/React.createElement(_Grid.default, {
       container: true,
       spacing: 2,
       key: key,
