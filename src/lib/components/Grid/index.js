@@ -25,6 +25,7 @@ import { useSnackbar, DialogComponent } from '@durlabh/dfamework-ui';
 import Menu from '@mui/material/Menu';
 import { getList, getRecord, deleteRecord, saveRecord } from './crud-helper';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import { Footer } from './footer';
 import { useRouter } from '../useRouter/useRouter'
 import template from './template'
@@ -234,7 +235,10 @@ const GridBase = memo(({
             if (column.linkTo) {
                 overrides.cellClassName = "mui-grid-linkColumn";
             }
-            finalColumns.push({ headerName: column.headerName || column.label, ...column, ...overrides });
+            finalColumns.push({ headerName: column.headerName || column.label, valueGetter: (params) => {
+                const newField = column.field;
+                return column.type === 'time' ? dayjs(params.row[newField]).format('LT') :  params.row[newField]
+            }, ...column, ...overrides });
             if (column.pinned) {
                 pinnedColumns[column.pinned === 'right' ? 'right' : 'left'].push(column.field);
             }

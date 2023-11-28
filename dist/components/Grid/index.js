@@ -36,6 +36,7 @@ var _dfameworkUi = require("@durlabh/dfamework-ui");
 var _Menu = _interopRequireDefault(require("@mui/material/Menu"));
 var _crudHelper = require("./crud-helper");
 var _propTypes = _interopRequireDefault(require("prop-types"));
+var _dayjs = _interopRequireDefault(require("dayjs"));
 var _footer = require("./footer");
 var _useRouter = require("../useRouter/useRouter");
 var _template = _interopRequireDefault(require("./template"));
@@ -310,7 +311,11 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
         overrides.cellClassName = "mui-grid-linkColumn";
       }
       finalColumns.push(_objectSpread(_objectSpread({
-        headerName: column.headerName || column.label
+        headerName: column.headerName || column.label,
+        valueGetter: params => {
+          const newField = column.field;
+          return column.type === 'time' ? (0, _dayjs.default)(params.row[newField]).format('LT') : params.row[newField];
+        }
       }, column), overrides));
       if (column.pinned) {
         pinnedColumns[column.pinned === 'right' ? 'right' : 'left'].push(column.field);
