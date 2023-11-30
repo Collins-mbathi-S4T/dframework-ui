@@ -235,7 +235,10 @@ const GridBase = memo(({
             if (column.linkTo) {
                 overrides.cellClassName = "mui-grid-linkColumn";
             }
-            finalColumns.push({ headerName: column.headerName || column.label, ...column, ...overrides });
+            finalColumns.push({ headerName: column.headerName || column.label, valueGetter: (params) => {
+                const newField = column.field;
+                return column.type === 'time' ? dayjs(params.row[newField]).format('LT') :  params.row[newField]
+            }, ...column, ...overrides });
             if (column.pinned) {
                 pinnedColumns[column.pinned === 'right' ? 'right' : 'left'].push(column.field);
             }
