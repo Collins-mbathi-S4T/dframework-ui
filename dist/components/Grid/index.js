@@ -311,11 +311,7 @@ const GridBase = /*#__PURE__*/(0, _react.memo)(_ref2 => {
         overrides.cellClassName = "mui-grid-linkColumn";
       }
       finalColumns.push(_objectSpread(_objectSpread({
-        headerName: column.headerName || column.label,
-        valueGetter: params => {
-          const newField = column.field;
-          return column.type === 'time' ? (0, _dayjs.default)(params.row[newField]).format('LT') : params.row[newField];
-        }
+        headerName: column.headerName || column.label
       }, column), overrides));
       if (column.pinned) {
         pinnedColumns[column.pinned === 'right' ? 'right' : 'left'].push(column.field);
