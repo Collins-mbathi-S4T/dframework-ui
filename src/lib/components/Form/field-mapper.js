@@ -137,7 +137,7 @@ const RenderColumns = ({ formElements, model, formik, data, onChange, combos, lo
         let isGridComponent = typeof column.relation === 'function';
         const gridStyle = !model.addHeaderFilters ? 12 : 10.5;
         return (
-            (column.editable === undefined || column.editable) && <Grid container spacing={2} key={key} className={classes.root} alignItems={isGridComponent ? "flex-start" : "center"}> 
+            (column.fieldEditable === undefined || column.fieldEditable) && <Grid container spacing={2} key={key} className={classes.root} alignItems={isGridComponent ? "flex-start" : "center"}> 
                 {column?.showLabel !== false ?
                     <Grid item xs={1.5} className={classes.childStyles}>
                         <Typography sx={{ fontSize: '16px', fontWeight: isGridComponent ? 'bold' : 'normal' }}> {column.label}: </Typography>
