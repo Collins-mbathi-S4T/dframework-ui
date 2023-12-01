@@ -71,12 +71,10 @@ const Field = ({ column, field, fieldLabel, formik, otherProps, classes }) => {
               },
               width: "200px",
             }}
-            components={{
-              OpenPickerIcon: KeyboardArrowDownIcon,
+            slots={{
+              textField: (params) => <TextField {...params} placeholder={column?.placeholder ? column?.placeholder : "hh:mm"} />,
+              openPickerIcon: KeyboardArrowDownIcon
             }}
-            renderInput={(params) => (
-              <TextField {...params} placeholder="select" />
-            )}
           />
           <FormControl component="fieldset">
             <RadioGroup
