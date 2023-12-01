@@ -97,6 +97,12 @@ const Form = ({
         // navigate('.');
     };
 
+    const handleDiscardChangesCloseDialog = () => {
+        formik.resetForm();
+        setIsDiscardDialogOpen(false);
+        navigate('.');
+    };
+
     const warnUnsavedChanges = () => {
         if (dirty) {
             setIsDiscardDialogOpen(true);
@@ -195,7 +201,7 @@ const Form = ({
                 </Box>)}
             </form>
             {errorMessage && (<DialogComponent open={!!errorMessage} onConfirm={clearError} onCancel={clearError} title="Info" hideCancelButton={true} > {errorMessage}</DialogComponent>)}
-            <DialogComponent open={isDiscardDialogOpen} onConfirm={handleDiscardChanges} onCancel={() => setIsDiscardDialogOpen(false)} title="Changes not saved" okText="Discard" cancelText="Continue">
+            <DialogComponent open={isDiscardDialogOpen} onConfirm={handleDiscardChangesCloseDialog} onCancel={() => setIsDiscardDialogOpen(false)} title="Changes not saved" okText="Discard" cancelText="Continue">
                 {"Would you like to continue to edit or discard changes?"}
             </DialogComponent>
             <DialogComponent open={isDeleting} onConfirm={handleDelete} onCancel={() => setIsDeleting(false)} title="Confirm Delete">

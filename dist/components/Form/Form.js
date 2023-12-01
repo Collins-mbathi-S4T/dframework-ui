@@ -133,6 +133,11 @@ const Form = _ref => {
     setIsDiscardDialogOpen(false);
     // navigate('.');
   };
+  const handleDiscardChangesCloseDialog = () => {
+    formik.resetForm();
+    setIsDiscardDialogOpen(false);
+    navigate('.');
+  };
   const warnUnsavedChanges = () => {
     if (dirty) {
       setIsDiscardDialogOpen(true);
@@ -279,7 +284,7 @@ const Form = _ref => {
     hideCancelButton: true
   }, " ", errorMessage), /*#__PURE__*/_react.default.createElement(_Dialog.DialogComponent, {
     open: isDiscardDialogOpen,
-    onConfirm: handleDiscardChanges,
+    onConfirm: handleDiscardChangesCloseDialog,
     onCancel: () => setIsDiscardDialogOpen(false),
     title: "Changes not saved",
     okText: "Discard",
