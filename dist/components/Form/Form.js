@@ -131,7 +131,7 @@ const Form = _ref => {
   const handleDiscardChanges = () => {
     formik.resetForm();
     setIsDiscardDialogOpen(false);
-    navigate('.');
+    // navigate('.');
   };
   const warnUnsavedChanges = () => {
     if (dirty) {
@@ -166,7 +166,7 @@ const Form = _ref => {
     }
   };
   const handleFormCancel = function handleFormCancel(e) {
-    e.preventDefault();
+    e === null || e === void 0 || e.preventDefault();
     if (model.path) {
       navigate("./".concat(model.path));
     } else {
@@ -265,8 +265,7 @@ const Form = _ref => {
         formik.handleSubmit();
         closeDialog();
       } : () => {
-        handleFormCancel();
-        closeDialog();
+        handleDiscardChanges();
       },
       buttonText: button.text,
       variant: button.variant,

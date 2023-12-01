@@ -94,7 +94,7 @@ const Form = ({
     const handleDiscardChanges = () => {
         formik.resetForm();
         setIsDiscardDialogOpen(false);
-        navigate('.');
+        // navigate('.');
     };
 
     const warnUnsavedChanges = () => {
@@ -121,7 +121,7 @@ const Form = ({
         }
     }
     const handleFormCancel = function (e) {
-        e.preventDefault();
+        e?.preventDefault();
         if(model.path) {
             navigate(`./${model.path}`);
         } else {
@@ -188,7 +188,7 @@ const Form = ({
                     {actionButtons.map((button, index) => {
                         return (
                             <Box key={index} ml={2} mt={4} >
-                                <model.CustomButton buttonFunction={button.text === 'Add' ? () => { formik.handleSubmit(); closeDialog() } : () => { handleFormCancel(); closeDialog() }} buttonText={button.text} variant={button.variant} color={button.color} />
+                                <model.CustomButton buttonFunction={button.text === 'Add' ? () => { formik.handleSubmit(); closeDialog() } : () => { handleDiscardChanges() }} buttonText={button.text} variant={button.variant} color={button.color} />
                             </Box>
                         )
                     })}
