@@ -71,10 +71,17 @@ const Field = ({ column, field, fieldLabel, formik, otherProps, classes }) => {
               },
               width: "200px",
             }}
-            slots={{
-              textField: (params) => <TextField {...params} placeholder={column?.placeholder ? column?.placeholder : "hh:mm"} />,
-              openPickerIcon: KeyboardArrowDownIcon
+            components={{
+              OpenPickerIcon: KeyboardArrowDownIcon,
             }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="select" />
+            )}
+
+            // slots={{
+            //   textField: (params) => <TextField {...params} placeholder={column?.placeholder ? column?.placeholder : "hh:mm"} />,
+            //   openPickerIcon: KeyboardArrowDownIcon
+            // }}
           />
           <FormControl component="fieldset">
             <RadioGroup

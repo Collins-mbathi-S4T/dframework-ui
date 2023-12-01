@@ -96,12 +96,17 @@ const Field = _ref => {
         },
         width: "200px"
       },
-      slots: {
-        textField: params => /*#__PURE__*/_react.default.createElement(_TextField.default, _extends({}, params, {
-          placeholder: column !== null && column !== void 0 && column.placeholder ? column === null || column === void 0 ? void 0 : column.placeholder : "hh:mm"
-        })),
-        openPickerIcon: _KeyboardArrowDown.default
-      }
+      components: {
+        OpenPickerIcon: _KeyboardArrowDown.default
+      },
+      renderInput: params => /*#__PURE__*/_react.default.createElement(_TextField.default, _extends({}, params, {
+        placeholder: "select"
+      }))
+
+      // slots={{
+      //   textField: (params) => <TextField {...params} placeholder={column?.placeholder ? column?.placeholder : "hh:mm"} />,
+      //   openPickerIcon: KeyboardArrowDownIcon
+      // }}
     }), /*#__PURE__*/_react.default.createElement(_FormControl.default, {
       component: "fieldset"
     }, /*#__PURE__*/_react.default.createElement(_RadioGroup.default, {
